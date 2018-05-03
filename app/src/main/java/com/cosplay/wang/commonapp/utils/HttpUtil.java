@@ -2,6 +2,8 @@ package com.cosplay.wang.commonapp.utils;
 
 
 import com.cosplay.wang.commonapp.CommonApplication;
+import com.cosplay.wang.commonapp.Constants;
+import com.cosplay.wang.commonapp.R;
 import com.cosplay.wang.commonapp.utils.okhttp.OkHttpUtil;
 import com.cosplay.wang.commonapp.utils.okhttp.OkhttpHeader;
 
@@ -10,7 +12,6 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -43,8 +44,8 @@ public class HttpUtil {
 		} else {
 			Response noNetResponse = new Response.Builder()
 					.request(new Request.Builder().url(url).build())
-					.message(CommonMessage.noNetworkMessage)
-					.protocol(HTTP_2).code(CommonMessage.noNetworkCode).build();
+					.message(CommonApplication.context.getString(R.string.no_net_message))
+					.protocol(HTTP_2).code(R.string.no_net_code).build();
 			return noNetResponse;
 		}
 	}
@@ -68,8 +69,8 @@ public class HttpUtil {
 		} else {
 			Response noNetResponse = new Response.Builder()
 					.request(new Request.Builder().url(url).build())
-					.message(CommonMessage.noNetworkMessage)
-					.protocol(HTTP_2).code(CommonMessage.noNetworkCode).build();
+					.message(CommonApplication.context.getString(R.string.no_net_message))
+					.protocol(HTTP_2).code(R.string.no_net_code).build();
 		}
 	}
 

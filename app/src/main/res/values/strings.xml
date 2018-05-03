@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CommonApp</string>
+    <string name="no_net_message">木有网</string>
+    <string name="no_net_code">10010</string>
 </resources>

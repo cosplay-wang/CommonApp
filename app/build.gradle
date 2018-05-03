@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.jakewharton.butterknife'
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -39,4 +39,12 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.0'
     compile 'org.slf4j:slf4j-api:1.7.25'
     compile 'com.github.tony19:logback-android:1.1.1-11'
+
+    compile("com.github.hotchemi:permissionsdispatcher:3.0.0")
+    annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:3.0.0"
+
+
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
 }

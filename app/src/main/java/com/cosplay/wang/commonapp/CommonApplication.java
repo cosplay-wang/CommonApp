@@ -13,7 +13,6 @@ import timber.log.Timber;
  * wechat 760560322
  * 作用：
  */
-
 public class CommonApplication extends Application {
     public static Context context;
 
@@ -27,5 +26,6 @@ public class CommonApplication extends Application {
 			Timber.plant(new CommonTimberTree());
 		}
 	}
+
 
 }
