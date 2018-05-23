@@ -22,10 +22,10 @@ public class ImageUtil {
 		GlideApp.with(fragment).load(url).into(imageView);
 	}
 	public static void loadImage(String url, ImageView imageView, Context context) {
-		GlideApp.with(context).load(url).into(imageView);
+		GlideApp.with(context).load(url).skipMemoryCache(true).into(imageView);
 	}
 	public static void loadImage(String url, ImageView imageView) {
-		GlideApp.with(imageView).load(url).into(imageView);
+		GlideApp.with(imageView.getContext()).load(url).into(imageView);
 	}
 
 	/**

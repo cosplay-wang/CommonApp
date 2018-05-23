@@ -1,17 +1,18 @@
-package com.cosplay.wang.commonapp;
+package com.cosplay.wang.commonapp.base;
 
 import android.app.Application;
 import android.content.Context;
 
+import com.cosplay.wang.commonapp.BuildConfig;
 import com.cosplay.wang.commonapp.utils.timbertree.CommonTimberDebugTree;
 import com.cosplay.wang.commonapp.utils.timbertree.CommonTimberTree;
 
 import timber.log.Timber;
 
 /**
- * Created by zhiwei.wang on 2018/5/2.
- * wechat 760560322
- * 作用：
+ * Author:zhiwei.wang on 2018/5/7.
+ * Email :cosplay.wang@gmail.com|760560322@qq.com
+ * Description:
  */
 public class CommonApplication extends Application {
     public static Context context;

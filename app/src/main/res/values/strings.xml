@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">CommonApp</string>
     <string name="no_net_message">木有网</string>
+    <string name="menu_news">新闻简读</string>
+    <string name="menu_image">图片浏览</string>
+    <string name="menu_video">视屏爽看</string>
+    <string name="menu_music">音乐轻听</string>
     <string name="no_net_code">10010</string>
 </resources>

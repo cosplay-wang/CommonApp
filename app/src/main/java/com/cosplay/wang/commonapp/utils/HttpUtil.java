@@ -1,8 +1,9 @@
 package com.cosplay.wang.commonapp.utils;
 
 
-import com.cosplay.wang.commonapp.CommonApplication;
-import com.cosplay.wang.commonapp.Constants;
+import android.util.Log;
+
+import com.cosplay.wang.commonapp.base.CommonApplication;
 import com.cosplay.wang.commonapp.R;
 import com.cosplay.wang.commonapp.utils.okhttp.OkHttpUtil;
 import com.cosplay.wang.commonapp.utils.okhttp.OkhttpHeader;
@@ -53,12 +54,13 @@ public class HttpUtil {
 	public static void httpRequest(String url,final OkHttpUtil.HttpRequestCallBack httpRequestCallBack) throws IOException {
 		boolean netIsWork = NetWorkUtil.isNetworkConnected(CommonApplication.context);
 		if (netIsWork) {
+			Log.e("dadasd",url);
 			Request.Builder builder = new Request.Builder();
 			Call call = OkHttpUtil.okHttpClient.newCall(builder.url(url).build());
 			call.enqueue(new Callback() {
 				@Override
 				public void onFailure(Call call, IOException e) {
-					httpRequestCallBack.onFailure(e);
+					httpRequestCallBack.onIFailure(e);
 				}
 
 				@Override

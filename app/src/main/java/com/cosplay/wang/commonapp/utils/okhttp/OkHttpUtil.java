@@ -73,7 +73,7 @@ public class OkHttpUtil {
 	public interface HttpRequestCallBack {
 		void onSuccess(Response response);
 
-		void onFailure(Exception e);
+		void onIFailure(Exception e);
 	}
 
 	static HttpRequestSuccessCallBack httpRequestSuccessCallBack;
