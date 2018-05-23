@@ -9,6 +9,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import com.cosplay.wang.commonapp.bean.ImageList;
 import com.cosplay.wang.commonapp.bean.NewsItem;
 import com.cosplay.wang.commonapp.presenter.ImageListPresenter;
 import com.cosplay.wang.commonapp.presenter.NewsPresenter;
+import com.cosplay.wang.commonapp.ui.activity.ImageDetailActivity;
 import com.cosplay.wang.commonapp.ui.activity.WebViewActivity;
 import com.cosplay.wang.commonapp.ui.adapter.ImageListRYAdapter;
 import com.cosplay.wang.commonapp.ui.adapter.NewsListRYAdapter;
@@ -52,6 +54,7 @@ public class CommonContentImageFragment extends BaseFragment implements ImageLis
 	ImageListPresenter imageListPresenter;
 	ImageListRYAdapter imageListRYAdapter;
 	String url;
+	ImageListFragment imageListFragment;
 	List<ImageList.ImgsBean> imgsBeanArrayList = new ArrayList<>();
 	int currentPage = 2;
 	boolean isRefreshing = false;
@@ -64,6 +67,9 @@ public class CommonContentImageFragment extends BaseFragment implements ImageLis
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	public void setFragment(ImageListFragment imageListFragment) {
+		this.imageListFragment = imageListFragment;
 	}
 
 	@Override
@@ -81,49 +87,41 @@ public class CommonContentImageFragment extends BaseFragment implements ImageLis
 //		divider.setDrawable(ContextCompat.getDrawable(CommonApplication.context, R.drawable.ry_item_divider));
 //		recyclerview.addItemDecoration(divider);
 		recyclerview.setAdapter(imageListRYAdapter);
+		((SimpleItemAnimator)recyclerview.getItemAnimator()).setSupportsChangeAnimations(false);
 		imageListRYAdapter.setOnItemClickListener(new ImageListRYAdapter.OnRYItemClickListener() {
 			@Override
 			public void onRYItemClick(View view, int position) {
-//				Intent intent = new Intent();
-//				intent.setClass(getActivity(),WebViewActivity.class);
-//				intent.putExtra("title",newsList.get(position).title);
-//				intent.putExtra("url",newsList.get(position).link.weburl);
-//				startActivity(intent);
+				Intent intent = new Intent();
+				intent.setClass(getActivity(),ImageDetailActivity.class);
+				intent.putExtra("url",imgsBeanArrayList.get(position).imageUrl);
+				startActivity(intent);
 			}
 		});
 		recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
 			@Override
-			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-				super.onScrolled(recyclerView, dx, dy);
-//				int lastVisiableItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
-//				int totalItem =  recyclerView.getLayoutManager().getItemCount();
-//				if (lastVisiableItem >= totalItem - 4 && dy > 0) {
-//					if (loadMoreing) {
-//
-//					} else {
-//						loadMoreing = true;
-//						currentPage = currentPage + 1;
-//						imageListPresenter.getData(currentPage);
-//					}
-//				}
-			}
-			@Override
 			public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-				//	super.onScrollStateChanged(recyclerView, newState);
-//				if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-//					Glide.with(CommonApplication.context).resumeRequests();
-//				}else if(newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-//					Glide.with(CommonApplication.context).resumeRequests();
-//				}else{
-//					Glide.with(CommonApplication.context).pauseRequests();
-//				}
+				super.onScrollStateChanged(recyclerView, newState);
 			}
 
+			@Override
+			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+				super.onScrolled(recyclerView, dx, dy);
+				int lastVisiableItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+				int totalItem =  recyclerView.getLayoutManager().getItemCount();
+				if (lastVisiableItem >= totalItem - 4 && dy > 0) {
+					if (loadMoreing) {
+
+					} else {
+						loadMoreing = true;
+						currentPage = currentPage + 1;
+						imageListPresenter.getData(currentPage);
+					}
+				}
+			}
 		});
 		swipelayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override
 			public void onRefresh() {
-
 				if (!isRefreshing) {
 					swipelayout.setRefreshing(true);
 					isRefreshing = true;
@@ -131,9 +129,9 @@ public class CommonContentImageFragment extends BaseFragment implements ImageLis
 					currentPage = 2;
 					imageListPresenter.getData(currentPage);
 				}
-
 			}
 		});
+
 	}
 
 	@Override
@@ -166,15 +164,24 @@ public class CommonContentImageFragment extends BaseFragment implements ImageLis
 			public void run() {
 				if (isRefreshing) {
 					imgsBeanArrayList.clear();
-					isRefreshing = false;
 					Log.e("recyclerview", imgsBeanArrayList.size() + "-+++++++++++++============");
 				}
-				loadMoreing = false;
-				for (ImageList.ImgsBean news : fnewsList) {
-					imgsBeanArrayList.add(news);
-				}
-				Log.e("recyclerview", imgsBeanArrayList.size() + "----------============");
-				imageListRYAdapter.notifyDataSetChanged();
+
+					loadMoreing = false;
+					for (ImageList.ImgsBean news : fnewsList) {
+						imgsBeanArrayList.add(news);
+					}
+					if(isRefreshing){
+						isRefreshing = false;
+						imageListRYAdapter.notifyDataSetChanged();
+					}else {
+						Log.e("recyclerview", imgsBeanArrayList.size() + "----------============");
+						//	imageListRYAdapter.notifyDataSetChanged();
+						imageListRYAdapter.notifyItemInserted(imgsBeanArrayList.size() - 20);
+					}
+					//	imageListRYAdapter.notifyItemRangeChanged(0,imgsBeanArrayList.size());
+
+
 				swipelayout.setRefreshing(false);
 				Log.e("recyclerview", imgsBeanArrayList.size() + "============");
 			}
@@ -186,7 +193,7 @@ public class CommonContentImageFragment extends BaseFragment implements ImageLis
 		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				Log.e("dff", e.getMessage());
+				Log.e("dff","exception"+ e.getMessage());
 				loadMoreing = false;
 				Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
 			}

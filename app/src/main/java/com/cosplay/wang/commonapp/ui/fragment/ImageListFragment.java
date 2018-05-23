@@ -2,6 +2,7 @@ package com.cosplay.wang.commonapp.ui.fragment;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +10,11 @@ import android.view.ViewGroup;
 import com.cosplay.wang.commonapp.R;
 import com.cosplay.wang.commonapp.base.BaseFragment;
 import com.cosplay.wang.commonapp.base.Constants;
+import com.cosplay.wang.commonapp.bean.ImageList;
 import com.cosplay.wang.commonapp.ui.adapter.ImageVPAdapter;
-import com.cosplay.wang.commonapp.ui.adapter.NewsVPAdapter;
+import com.cosplay.wang.commonapp.utils.ImageUtil;
 import com.cosplay.wang.commonapp.view.widgits.HomeViewPager;
+import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +35,11 @@ public class ImageListFragment extends BaseFragment {
 	@BindView(R.id.image_viewpager)
 	HomeViewPager imageViewpager;
 	Unbinder unbinder;
-	String[] newsCategoryArrayName ;
+	String[] newsCategoryArrayName;
 	List<CommonContentImageFragment> viewList = new ArrayList<>();
 	ImageVPAdapter imageVPAdapter;
+
+
 	@Override
 	protected int getContentViewLayoutID() {
 		return R.layout.image_layout;
@@ -45,16 +50,20 @@ public class ImageListFragment extends BaseFragment {
 		newsCategoryArrayName = getResources().getStringArray(R.array.images_category_list_id);
 
 
-		for(int i= 0;i<newsCategoryArrayName.length;i++){
+		for (int i = 0; i < newsCategoryArrayName.length; i++) {
 			CommonContentImageFragment fragment = new CommonContentImageFragment();
-			fragment.setUrl(Constants.ImageListUrl+"&col="+newsCategoryArrayName[i]+"&pn=");
+			fragment.setUrl(Constants.ImageListUrl + "&col=" + newsCategoryArrayName[i] + "&pn=");
+			fragment.setFragment(ImageListFragment.this);
 			viewList.add(fragment);
 		}
-		imageVPAdapter = new ImageVPAdapter(getActivity().getSupportFragmentManager(),viewList,newsCategoryArrayName);
+		imageVPAdapter = new ImageVPAdapter(getChildFragmentManager(), viewList, newsCategoryArrayName);
 		imageViewpager.setAdapter(imageVPAdapter);
 		imageViewpager.setCanScroll(true);
 		imageTablayout.setupWithViewPager(imageViewpager);
+		imageViewpager.setOffscreenPageLimit(newsCategoryArrayName.length);
+
 	}
+
 
 	@Override
 	protected void onFirstUserVisible() {

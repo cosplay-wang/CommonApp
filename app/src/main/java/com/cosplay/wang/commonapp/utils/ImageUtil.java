@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.request.RequestOptions;
 import com.cosplay.wang.commonapp.utils.glideModule.GlideApp;
 
+
 /**
  * Created by zhiwei.wang on 2018/5/2.
  * wechat 760560322
@@ -23,6 +24,9 @@ public class ImageUtil {
 	}
 	public static void loadImage(String url, ImageView imageView, Context context) {
 		GlideApp.with(context).load(url).skipMemoryCache(true).into(imageView);
+	}
+	public static void loadImage(int url, ImageView imageView, Context context) {
+		GlideApp.with(context).load(url).into(imageView);
 	}
 	public static void loadImage(String url, ImageView imageView) {
 		GlideApp.with(imageView.getContext()).load(url).into(imageView);

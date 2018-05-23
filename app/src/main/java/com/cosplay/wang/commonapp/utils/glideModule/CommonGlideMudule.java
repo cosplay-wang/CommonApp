@@ -23,7 +23,7 @@ import com.bumptech.glide.module.AppGlideModule;
 @GlideModule
 
 public class CommonGlideMudule extends AppGlideModule {
-	public static final int DISK_CACHE_SIZE = 500 * 1024 * 1024;
+	public static final int DISK_CACHE_SIZE = 50 * 1024 * 1024;
 	public static final String DISK_CACHE_NAME = "cosplay";
 
 
@@ -45,7 +45,7 @@ public class CommonGlideMudule extends AppGlideModule {
 		builder.setDiskCache(new ExternalPreferredCacheDiskCacheFactory(context, DISK_CACHE_NAME, DISK_CACHE_SIZE));
 
 		int maxMemory = (int) Runtime.getRuntime().maxMemory();
-		int memoryCacheSize = maxMemory / 8;
+		int memoryCacheSize = maxMemory / 16;
 		//设置Glide的内存缓存大小
 		builder.setMemoryCache(new LruResourceCache(memoryCacheSize));
 
@@ -54,7 +54,7 @@ public class CommonGlideMudule extends AppGlideModule {
 		MemorySizeCalculator calculator = memorySizeCalculatorBuilder.build();
 		int defaultBitmapPoolSize = calculator.getBitmapPoolSize();
 		//设置Glide的bitmap缓存池大小
-		builder.setBitmapPool(new LruBitmapPool((int)(1.2 * defaultBitmapPoolSize)));
+		builder.setBitmapPool(new LruBitmapPool((int)(0.8 * defaultBitmapPoolSize)));
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.cosplay.wang.commonapp.R;
 import com.cosplay.wang.commonapp.base.CommonApplication;
 import com.cosplay.wang.commonapp.bean.NewsItem;
@@ -46,7 +47,7 @@ public class NewsListRYAdapter extends RecyclerView.Adapter<NewsListRYAdapter.Vi
 	@Override
 	public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 		NewsItem newsItem = newsList.get(position);
-//		Glide.with(CommonApplication.context).load(newsItem.thumbnail).into(holder.imageView);
+		//Glide.with(CommonApplication.context).load(newsItem.thumbnail).into(holder.imageView);
 		ImageUtil.loadImage(newsItem.thumbnail, holder.imageView,context);
 		holder.title.setText(newsItem.title);
 		holder.from.setText("新华日报");

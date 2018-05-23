@@ -53,9 +53,10 @@ public class NewsFragment extends BaseFragment {
 			fragment.setUrl(getURLList().get(i));
 			viewList.add(fragment);
 		}
-		newsVPAdapter = new NewsVPAdapter(getActivity().getSupportFragmentManager(),viewList,newsCategoryArrayName);
+		newsVPAdapter = new NewsVPAdapter(getChildFragmentManager(),viewList,newsCategoryArrayName);
 		newsViewpager.setAdapter(newsVPAdapter);
 		newsViewpager.setCanScroll(true);
+		newsViewpager.setOffscreenPageLimit(viewList.size());
 		newsTablayout.setupWithViewPager(newsViewpager);
 	}
 

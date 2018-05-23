@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -79,9 +80,9 @@ public class HomeActivity extends BaseActivity {
 		drawerLayout.addDrawerListener(drawerbar);
 		navigation.setItemIconTintList(null);
 		View headerview = navigation.getHeaderView(0);
-//		LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) headerview.getLayoutParams();
-//		lp.setMargins(0, (int) DeviceUtil.getStatusBarHeight(this), 0, 0);
-//		headerview.setLayoutParams(lp);
+		//		LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) headerview.getLayoutParams();
+		//		lp.setMargins(0, (int) DeviceUtil.getStatusBarHeight(this), 0, 0);
+		//		headerview.setLayoutParams(lp);
 
 		headerview.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -176,6 +177,8 @@ public class HomeActivity extends BaseActivity {
 		// 代理权限处理到自动生成的方法
 		HomeActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
 	}
+
+
 
 
 }
