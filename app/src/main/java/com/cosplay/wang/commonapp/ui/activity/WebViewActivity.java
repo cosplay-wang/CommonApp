@@ -1,6 +1,9 @@
 package com.cosplay.wang.commonapp.ui.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
@@ -18,16 +21,22 @@ public class WebViewActivity extends BaseActivity {
 	String url;
 	LinearLayout linearLayout;
 	String title;
-
+    Handler handler = new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+		}
+	};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-		linearLayout = (LinearLayout) inflater.inflate(R.layout.activity_web_view, null);
-		setContentView(linearLayout);
+		//LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
+		setContentView(R.layout.activity_web_view);
+		linearLayout = findViewById(R.id.webview_lin);
+		//Log.e("adsada", getToolbar() + "-----------");
 		title = getIntent().getStringExtra("title");
-		getSupportActionBar().setTitle(title);
+
 		url = getIntent().getStringExtra("url");
 		if (url != null && !url.equals("")) {
 			webView = new WebView(this);
@@ -76,6 +85,15 @@ public class WebViewActivity extends BaseActivity {
 		} else {
 			finish();
 		}
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (getMyToolbar() != null) {
+			getMyToolbar().setTitle(title);
+		}
+
 	}
 
 	@Override

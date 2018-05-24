@@ -4,6 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cosplay.wang.commonapp.ui.activity.WebViewActivity">
-
+    android:id="@+id/webview_lin"
+    tools:context="com.cosplay.wang.commonapp.ui.activity.WebViewActivity"
+    android:orientation="vertical">
+    <include
+        android:id="@+id/common_toolbar"
+        layout="@layout/common_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

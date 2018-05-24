@@ -1,6 +1,7 @@
 package com.cosplay.wang.commonapp.ui.activity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.cosplay.wang.commonapp.R;
 import com.cosplay.wang.commonapp.base.BaseActivity;
@@ -23,7 +24,7 @@ public class ImageDetailActivity extends BaseActivity {
 		ButterKnife.bind(this);
 		url = getIntent().getStringExtra("url");
 		if (url != null) {
-			ImageUtil.loadImage(url,photoView,this);
+			ImageUtil.loadImage(url, photoView, this);
 		}
 	}
 
@@ -46,4 +47,6 @@ public class ImageDetailActivity extends BaseActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 	}
+
+
 }

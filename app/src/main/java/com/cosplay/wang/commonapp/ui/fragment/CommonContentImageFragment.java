@@ -29,10 +29,14 @@ import com.cosplay.wang.commonapp.ui.activity.ImageDetailActivity;
 import com.cosplay.wang.commonapp.ui.activity.WebViewActivity;
 import com.cosplay.wang.commonapp.ui.adapter.ImageListRYAdapter;
 import com.cosplay.wang.commonapp.ui.adapter.NewsListRYAdapter;
+import com.cosplay.wang.commonapp.utils.Recyclerview.ItemDecoration;
+import com.cosplay.wang.commonapp.utils.Recyclerview.MyDecoration;
 import com.cosplay.wang.commonapp.view.ImageListView;
 import com.cosplay.wang.commonapp.view.NewsListView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -78,14 +82,15 @@ public class CommonContentImageFragment extends BaseFragment implements ImageLis
 		swipelayout.setRefreshing(true);
 		imageListPresenter = new ImageListPresenter(url, this);
 		imageListPresenter.getData(currentPage);
-		imageListRYAdapter = new ImageListRYAdapter(imgsBeanArrayList, CommonApplication.context);
-		GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
-		gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+		imageListRYAdapter = new ImageListRYAdapter(imgsBeanArrayList, getActivity());
+		StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
+	//	gridLayoutManager.setOrientation();
+		gridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
 		recyclerview.setLayoutManager(gridLayoutManager);
 		//添加自定义分割线
 //		DividerItemDecoration divider = new DividerItemDecoration(CommonApplication.context, DividerItemDecoration.VERTICAL);
 //		divider.setDrawable(ContextCompat.getDrawable(CommonApplication.context, R.drawable.ry_item_divider));
-//		recyclerview.addItemDecoration(divider);
+	//	recyclerview.addItemDecoration(new MyDecoration());
 		recyclerview.setAdapter(imageListRYAdapter);
 		((SimpleItemAnimator)recyclerview.getItemAnimator()).setSupportsChangeAnimations(false);
 		imageListRYAdapter.setOnItemClickListener(new ImageListRYAdapter.OnRYItemClickListener() {
@@ -106,7 +111,7 @@ public class CommonContentImageFragment extends BaseFragment implements ImageLis
 			@Override
 			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 				super.onScrolled(recyclerView, dx, dy);
-				int lastVisiableItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+				int lastVisiableItem = getLastVisibleItemPosition(null);
 				int totalItem =  recyclerView.getLayoutManager().getItemCount();
 				if (lastVisiableItem >= totalItem - 4 && dy > 0) {
 					if (loadMoreing) {
@@ -156,12 +161,52 @@ public class CommonContentImageFragment extends BaseFragment implements ImageLis
 		swipelayout.setRefreshing(false);
 	}
 
+
+	/**
+	 * 获取底部可见项的位置
+	 * 获取最后一个条目的索引
+	 * @param lastPos 如果是瀑布流的话就返回每一列最后一个条目的索引
+	 * @return
+	 */
+	private int getLastVisibleItemPosition(int[] lastPos) {
+		RecyclerView.LayoutManager lm = recyclerview.getLayoutManager();
+		int lastVisibleItemPosition = 0;
+		if (lm instanceof GridLayoutManager) {
+			lastVisibleItemPosition = ((GridLayoutManager) lm).findLastVisibleItemPosition();
+		} else if (lm instanceof LinearLayoutManager) {
+			lastVisibleItemPosition = ((LinearLayoutManager) lm).findLastVisibleItemPosition();
+		}else if(lm instanceof StaggeredGridLayoutManager){
+			StaggeredGridLayoutManager layoutManager = (StaggeredGridLayoutManager)lm;
+			int columnCount = layoutManager.getColumnCountForAccessibility(null, null);//获取瀑布流的列数
+			//int columnCount = layoutManager.getSpanCount();//获取瀑布流的列数
+			int[] positions = new int[columnCount];
+			layoutManager.findLastVisibleItemPositions(positions);//获取瀑布流的每一列的最下面的条目的索引（并不是最后n个(n为瀑布流的列数)），有的条目可能会很长
+		     lastVisibleItemPosition = maxInteger(positions);//返回其中最大的一个（它是乱序的，并不是按顺序保存的）
+			//System.arraycopy(positions,0,lastPos,0,positions.length);
+			//瀑布流的布局方式是哪一列的高度最小，下一个条目就排到哪一列的后面
+		}
+		return lastVisibleItemPosition;
+	}
+	private int maxInteger(int[] positions){
+        int temp = -1;
+		for(int i=0;i<positions.length;i++) {
+			for(int j=i+1;j<positions.length;j++) {
+				if(positions[i]>positions[j]) {
+					temp = positions[i];
+					positions[i] = positions[j];
+					positions[j] = temp;
+				}
+			}
+		}
+		return  positions[0];
+	}
 	@Override
 	public void loadDataSuccess(final List<ImageList.ImgsBean> fnewsList) {
 
 		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
+
 				if (isRefreshing) {
 					imgsBeanArrayList.clear();
 					Log.e("recyclerview", imgsBeanArrayList.size() + "-+++++++++++++============");
@@ -171,6 +216,7 @@ public class CommonContentImageFragment extends BaseFragment implements ImageLis
 					for (ImageList.ImgsBean news : fnewsList) {
 						imgsBeanArrayList.add(news);
 					}
+				//imageListRYAdapter.getRandomHeight(imgsBeanArrayList);
 					if(isRefreshing){
 						isRefreshing = false;
 						imageListRYAdapter.notifyDataSetChanged();

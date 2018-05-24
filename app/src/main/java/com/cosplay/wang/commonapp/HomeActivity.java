@@ -95,6 +95,7 @@ public class HomeActivity extends BaseActivity {
 			@Override
 			public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 				String name = item.getTitle().toString();
+				getMyToolbar().setTitle(name);
 				if (getResources().getString(R.string.menu_news).equals(name)) {
 					viewPager.setCurrentItem(0);
 				} else if (getResources().getString(R.string.menu_image).equals(name)) {
@@ -120,6 +121,7 @@ public class HomeActivity extends BaseActivity {
 		viewPager.setCanScroll(false);
 		viewPager.setOffscreenPageLimit(fragmentList.size());
 		viewPager.setCurrentItem(0);
+		getMyToolbar().setTitle(getResources().getString(R.string.menu_news));
 	}
 
 	@NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
