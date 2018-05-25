@@ -27,13 +27,13 @@ public abstract class BaseLazyFragment extends Fragment {
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
-		Log.e("saudgsyfsd","onAttach");
+		//Log.e("saudgsyfsd","onAttach");
 	}
 
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		Log.e("saudgsyfsd","onCreateView");
+	//	Log.e("saudgsyfsd","onCreateView");
 		if (getContentViewLayoutID() != 0) {
 			return inflater.inflate(getContentViewLayoutID(), null);
 		} else {
@@ -95,7 +95,7 @@ public abstract class BaseLazyFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		//super.onViewCreated(view, savedInstanceState);
-		Log.e("saudgsyfsd","onViewCreated");
+		//Log.e("saudgsyfsd","onViewCreated");
 		onFirstUserVisible();
 		ButterKnife.bind(view);
 		initViewsAndEvents();

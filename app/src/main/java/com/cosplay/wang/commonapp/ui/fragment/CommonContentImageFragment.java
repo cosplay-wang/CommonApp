@@ -209,7 +209,7 @@ public class CommonContentImageFragment extends BaseFragment implements ImageLis
 
 				if (isRefreshing) {
 					imgsBeanArrayList.clear();
-					Log.e("recyclerview", imgsBeanArrayList.size() + "-+++++++++++++============");
+				//	Log.e("recyclerview", imgsBeanArrayList.size() + "-+++++++++++++============");
 				}
 
 					loadMoreing = false;
@@ -221,7 +221,7 @@ public class CommonContentImageFragment extends BaseFragment implements ImageLis
 						isRefreshing = false;
 						imageListRYAdapter.notifyDataSetChanged();
 					}else {
-						Log.e("recyclerview", imgsBeanArrayList.size() + "----------============");
+					//	Log.e("recyclerview", imgsBeanArrayList.size() + "----------============");
 						//	imageListRYAdapter.notifyDataSetChanged();
 						imageListRYAdapter.notifyItemInserted(imgsBeanArrayList.size() - 20);
 					}
@@ -229,7 +229,7 @@ public class CommonContentImageFragment extends BaseFragment implements ImageLis
 
 
 				swipelayout.setRefreshing(false);
-				Log.e("recyclerview", imgsBeanArrayList.size() + "============");
+				//Log.e("recyclerview", imgsBeanArrayList.size() + "============");
 			}
 		});
 	}

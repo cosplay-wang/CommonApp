@@ -54,7 +54,7 @@ public class HttpUtil {
 	public static void httpRequest(String url,final OkHttpUtil.HttpRequestCallBack httpRequestCallBack) throws IOException {
 		boolean netIsWork = NetWorkUtil.isNetworkConnected(CommonApplication.context);
 		if (netIsWork) {
-			Log.e("dadasd",url);
+			//Log.e("dadasd",url);
 			Request.Builder builder = new Request.Builder();
 			Call call = OkHttpUtil.okHttpClient.newCall(builder.url(url).build());
 			call.enqueue(new Callback() {

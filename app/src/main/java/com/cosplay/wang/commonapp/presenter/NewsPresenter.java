@@ -55,7 +55,7 @@ public class NewsPresenter extends BasePresenter {
 										for (int j = 0; j < jsonArrayInner.length(); j++) {
 											JSONObject jobj = jsonArrayInner.getJSONObject(j);
 											if (jobj.get("type").toString().equals("doc")) {
-												Log.e("sdasd",jobj.get("type").toString());
+												//Log.e("sdasd",jobj.get("type").toString());
 												newsItemDoc.add(JsonUtil.GsonToBean(jobj.toString(), NewsItem.class));
 											}
 										}

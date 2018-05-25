@@ -78,7 +78,7 @@ public class ImageListRYAdapter extends RecyclerView.Adapter<ImageListRYAdapter.
 		//	Glide.with(context).load(image.thumbnailUrl)..into(holder.imageView);
 		ImageUtil.loadImage(image.thumbnailUrl, holder.imageView, context);
 		holder.title.setText(image.title);
-		Log.e("asdasd", image.title + "\n" + image.thumbnailUrl);
+		//Log.e("asdasd", image.title + "\n" + image.thumbnailUrl);
 	}
 
 	@Override

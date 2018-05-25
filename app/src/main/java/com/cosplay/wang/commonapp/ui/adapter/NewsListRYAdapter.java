@@ -51,7 +51,7 @@ public class NewsListRYAdapter extends RecyclerView.Adapter<NewsListRYAdapter.Vi
 		ImageUtil.loadImage(newsItem.thumbnail, holder.imageView,context);
 		holder.title.setText(newsItem.title);
 		holder.from.setText("新华日报");
-		Log.e("asdasd",newsItem.commentsall+"\n"+newsItem.commentsUrl);
+		//Log.e("asdasd",newsItem.commentsall+"\n"+newsItem.commentsUrl);
 	}
 
 	@Override

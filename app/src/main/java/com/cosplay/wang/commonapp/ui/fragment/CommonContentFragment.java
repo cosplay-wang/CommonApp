@@ -161,16 +161,16 @@ public class CommonContentFragment extends BaseFragment implements NewsListView 
 				if (isRefreshing) {
 					newsList.clear();
 					isRefreshing = false;
-					Log.e("recyclerview", newsList.size() + "-+++++++++++++============");
+				//	Log.e("recyclerview", newsList.size() + "-+++++++++++++============");
 				}
 				loadMoreing = false;
 				for (NewsItem news : fnewsList) {
 					newsList.add(news);
 				}
-				Log.e("recyclerview", newsList.size() + "----------============");
+			//	Log.e("recyclerview", newsList.size() + "----------============");
 				newsListRYAdapter.notifyDataSetChanged();
 				swipelayout.setRefreshing(false);
-				Log.e("recyclerview", newsList.size() + "============");
+			//	Log.e("recyclerview", newsList.size() + "============");
 			}
 		});
 	}

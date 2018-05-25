@@ -36,9 +36,7 @@ public class BaseActivity extends AppCompatActivity {
 			setSupportActionBar(toolbar);
 			getSupportActionBar().setHomeButtonEnabled(true);
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-			Log.e("asdad", "---------------");
 		} else {
-			Log.e("asdad", "ffffffffffffffffff---------------");
 		}
 	}
 
