@@ -6,6 +6,7 @@ import android.content.Context;
 import com.cosplay.wang.commonapp.BuildConfig;
 import com.cosplay.wang.commonapp.utils.timbertree.CommonTimberDebugTree;
 import com.cosplay.wang.commonapp.utils.timbertree.CommonTimberTree;
+import com.squareup.leakcanary.LeakCanary;
 
 import timber.log.Timber;
 
@@ -26,6 +27,13 @@ public class CommonApplication extends Application {
 		} else {
 			Timber.plant(new CommonTimberTree());
 		}
+
+		if (LeakCanary.isInAnalyzerProcess(this)) {
+			// This process is dedicated to LeakCanary for heap analysis.
+			// You should not init your app in this process.
+			return;
+		}
+		LeakCanary.install(this);
 	}
 
 

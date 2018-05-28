@@ -12,4 +12,10 @@
         <item name="windowNoTitle">true</item>
         <item name="android:actionMenuTextColor">#fff</item>
     </style>
+    <style name="AppTheme.NoActionBar.webview">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:actionMenuTextColor">#fff</item>
+        <item name="android:windowBackground">@android:drawable/screen_background_dark</item>
+    </style>
 </resources>

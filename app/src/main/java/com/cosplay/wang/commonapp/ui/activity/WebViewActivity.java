@@ -1,5 +1,6 @@
 package com.cosplay.wang.commonapp.ui.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -34,10 +35,12 @@ public class WebViewActivity extends BaseActivity {
 
 		setContentView(R.layout.activity_web_view);
 		linearLayout = findViewById(R.id.webview_lin);
-		//Log.e("adsada", getToolbar() + "-----------");
+
 		title = getIntent().getStringExtra("title");
 
 		url = getIntent().getStringExtra("url");
+		Log.e("adsada", url+ "-----------");
+		//url = "https://blog.csdn.net/kernel_jim_wu/article/details/70149475";
 		if (url != null && !url.equals("")) {
 			webView = new WebView(this);
 			linearLayout.addView(webView);
@@ -71,7 +74,11 @@ public class WebViewActivity extends BaseActivity {
 			webView.setWebViewClient(new WebViewClient() {
 				@Override
 				public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-					view.loadUrl(url);
+					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+						view.loadUrl(request.getUrl().toString());
+					} else {
+						view.loadUrl(request.toString());
+					}
 					return true;
 				}
 			});
